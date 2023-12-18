@@ -9,6 +9,7 @@ TagManager:
   - Boundary
   - LeftWave
   - RightWave
+  - MustGrab
   layers:
   - Default
   - TransparentFX
