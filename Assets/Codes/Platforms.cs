@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Platforms : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private float movespeed;
     void Start () {
 
     }
@@ -12,15 +12,14 @@ public class Platforms : MonoBehaviour
     // Update is called once per frame
     void Update () 
     {
-        float movespeed = -0.0035f;
+        movespeed = PlayerPrefs.GetFloat("Speed", movespeed);
         transform.Translate(movespeed, 0, 0);
-
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Boarder")
-        {
-            Destroy(this.gameObject);
-        }
-    }
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+    //     if(collision.tag == "Boarder")
+    //     {
+    //         Destroy(this.gameObject);
+    //     }
+    // }
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Platform
   - Boarder
+  - Boundary
+  - LeftWave
+  - RightWave
   layers:
   - Default
   - TransparentFX
