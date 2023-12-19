@@ -18,7 +18,7 @@ public class Items : MonoBehaviour
         transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
 
         // Перевірка на досягнення точки зникнення
-        if (transform.position.x > vanishX)
+        if (transform.position.x == vanishX)
         {
             gameObject.SetActive(false);
         }

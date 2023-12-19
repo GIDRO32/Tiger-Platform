@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public GameObject ball;
     public GameObject boundary;
     private int balls_needed = 10;
+    private float line_speed = 4f;
     public Text balls;
 
     // Update is called once per frame
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
             transform.Translate(Vector3.left * movespeed * Time.deltaTime);
         }
         balls.text = balls_needed.ToString();
+        PlayerPrefs.SetFloat("Line Speed", line_speed);
     }
 
     // Функція для кнопки "Вгору"
@@ -79,6 +81,16 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             balls_needed--;
+        }
+        if (other.CompareTag("Bomb"))
+        {
+            Time.timeScale = 0f;
+            other.gameObject.SetActive(false);
+        }
+        if (other.CompareTag("RedPlatform"))
+        {
+            Debug.Log("On Red!");
+            line_speed = line_speed + 0.2f;
         }
     }
 

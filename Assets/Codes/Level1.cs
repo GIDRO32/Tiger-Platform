@@ -4,12 +4,10 @@ using System.Collections.Generic;
 public class SpawnLines : MonoBehaviour
 {
     public GameObject[] platformPrefabs;
-    public GameObject[] itemPrefabs; // Змінено ім'я для відображення того, що це предмети
+    public GameObject[] itemPrefabs;
     public float Lines;
-    public float Spawn;
     public float Distance;
-    public float X_Move;
-    public float ScreenBoundsX = 8f;
+    public float ScreenBoundsX;
 
     private float spawnTime;
     private List<GameObject> platformPool = new List<GameObject>();
@@ -58,6 +56,7 @@ void SpawnPlatforms()
 
         // Активуємо платформу після встановлення всіх параметрів
         platformPrefab.SetActive(true);
+        platformSpeed = PlayerPrefs.GetFloat("Line Speed", platformSpeed);
     }
 
     if (itemPrefab != null)
@@ -122,7 +121,7 @@ void SpawnPlatforms()
 
     void CheckAndDeactivatePlatforms()
     {
-        float screenLeftBound = -ScreenBoundsX;
+        float screenLeftBound = ScreenBoundsX;
 
         foreach (GameObject platform in platformPool)
         {

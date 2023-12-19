@@ -10,6 +10,11 @@ TagManager:
   - LeftWave
   - RightWave
   - MustGrab
+  - MustGrab2
+  - Bomb
+  - RedPlatform
+  - IcePlatform
+  - BrokenPlatform
   layers:
   - Default
   - TransparentFX
