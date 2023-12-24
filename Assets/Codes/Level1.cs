@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class SpawnLines : MonoBehaviour
+public class Level1 : MonoBehaviour
 {
     public GameObject[] platformPrefabs;
     public GameObject[] itemPrefabs;
     public float Lines;
     public float Distance;
     public float ScreenBoundsX;
+    public FlowDirection flowDirection;
+    public float platformSpeed;
 
     private float spawnTime;
     private List<GameObject> platformPool = new List<GameObject>();
@@ -28,9 +30,6 @@ public class SpawnLines : MonoBehaviour
     {
         Right, Left
     }
-
-    public FlowDirection flowDirection;
-    public float platformSpeed;
 void SpawnPlatforms()
 {
     GameObject platformPrefab = GetPlatformFromPool();
@@ -56,7 +55,6 @@ void SpawnPlatforms()
 
         // Активуємо платформу після встановлення всіх параметрів
         platformPrefab.SetActive(true);
-        platformSpeed = PlayerPrefs.GetFloat("Line Speed", platformSpeed);
     }
 
     if (itemPrefab != null)
@@ -74,6 +72,8 @@ void SpawnPlatforms()
         // Активуємо itemPrefab після встановлення всіх параметрів
         itemPrefab.SetActive(true);
     }
+    platformSpeed = PlayerPrefs.GetFloat("Line Speed", platformSpeed);
+    Distance = PlayerPrefs.GetFloat("Line Distance", Distance);
 
 
     // Додайте виклик Update для платформи
