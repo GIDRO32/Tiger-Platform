@@ -129,6 +129,7 @@ public class PlayerController : MonoBehaviour
         }
         if(ballsA_needed == 0 && ballsB_needed == 0)
         {
+            Interface.SetActive(false);
             LevelCheck.SetActive(true);
             ClearPanel.SetActive(true);
             LevelClear(Stars, Rank);

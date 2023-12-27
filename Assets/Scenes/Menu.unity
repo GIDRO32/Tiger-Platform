@@ -12899,7 +12899,7 @@ MonoBehaviour:
   Roster: {fileID: 1435751545}
   Settings: {fileID: 1706095247}
   Tutorial: {fileID: 1564114594}
-  test: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
+  test: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
   Click: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
   Back: {fileID: 8300000, guid: b43d102aac6b145468dcaa94a5cccae1, type: 3}
   Reset: {fileID: 8300000, guid: ff5f85da24bc943d1abdc5760a22bc81, type: 3}
