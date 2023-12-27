@@ -46,12 +46,14 @@ public class PlayerController : MonoBehaviour
     public GameObject HomePanel;
     public GameObject GameOver;
     public GameObject Interface;
+    public GameObject Starter;
     public Slider ticker;
     public Slider Volume;
     public Slider SFX;
     private bool isOnBrokenPlatform = false;
     private bool FullHealth;
     private bool NoExtras;
+    private bool HasStarted = false;
     private float breakTimer = 3f;
     public int ballsA_needed = 10;
     public int ballsB_needed = 0;
@@ -62,6 +64,7 @@ public class PlayerController : MonoBehaviour
     public int Shield_Count;
     private float line_speed = 4f;
     private float distance = 0.7f;
+    private float start_delay = 3f;
     private string Rank;
     public string LevelTag;
     public string Progress_Tag;
@@ -89,7 +92,10 @@ public class PlayerController : MonoBehaviour
         LevelCheck.SetActive(false);
         HealthCheck.SetActive(true);
         BallsCheck.SetActive(true);
+        Starter.SetActive(true);
         Time.timeScale = 1f;
+        Interface.SetActive(false);
+        StartCoroutine(GetReady());
     }
     // Update is called once per frame
     void Update()
@@ -171,6 +177,13 @@ public class PlayerController : MonoBehaviour
             ExtraShow.SetActive(true);
         }
     }
+    IEnumerator GetReady()
+    {
+        yield return new WaitForSeconds(start_delay);
+        HasStarted = true;
+        Starter.SetActive(false);
+        Interface.SetActive(true);
+    }
     IEnumerator ResetBreakTimer()
     {
         ticker.value = 1f; // Скидання значення слайдера на максимум
@@ -222,14 +235,11 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    // Функція для кнопки "Вгору"
     public void GoUp()
     {
         Sounds.PlayOneShot(Move);
         transform.Translate(Vector3.up * step);
     }
-
-    // Функція для кнопки "Вниз"
     public void GoDown()
     {
         Sounds.PlayOneShot(Move);
@@ -299,29 +309,29 @@ if (!isPlayingYouClear)
     // Обробка входу в триггер
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("RightWave"))
+        if (other.CompareTag("RightWave") && HasStarted)
         {
             isOnLeftWave = false;
             isOnRightWave = true;
         }
-        else if (other.CompareTag("LeftWave"))
+        else if (other.CompareTag("LeftWave") && HasStarted)
         {
             isOnLeftWave = true;
             isOnRightWave = false;
         }
-        if (other.CompareTag("MustGrab") && ballsA_needed > 0)
+        if (other.CompareTag("MustGrab") && ballsA_needed > 0 && HasStarted)
         {
             Sounds.PlayOneShot(PickUp);
             other.gameObject.SetActive(false);
             ballsA_needed--;
         }
-        if (other.CompareTag("MustGrab2") && ballsB_needed > 0)
+        if (other.CompareTag("MustGrab2") && ballsB_needed > 0 && HasStarted)
         {
             Sounds.PlayOneShot(PickUp);
             other.gameObject.SetActive(false);
             ballsB_needed--;
         }
-        if (other.CompareTag("Extra"))
+        if (other.CompareTag("Extra") && HasStarted)
         {
             Sounds.PlayOneShot(PickUp);
             other.gameObject.SetActive(false);
@@ -329,20 +339,20 @@ if (!isPlayingYouClear)
         }
 if (!Shield.activeSelf) // Перевірка, чи щит неактивний
     {
-        if (other.CompareTag("Bomb"))
+        if (other.CompareTag("Bomb") && HasStarted)
         {
             Sounds.PlayOneShot(BombStep);
             health--;
             other.gameObject.SetActive(false);
         }
-        if (other.CompareTag("RedPlatform"))
+        if (other.CompareTag("RedPlatform") && HasStarted)
         {
             Sounds.PlayOneShot(RedStep);
             line_speed = line_speed + 0.2f;
             movespeed = movespeed + 0.2f;
             distance = distance - 0.02f;
         }
-        if (other.CompareTag("IcePlatform"))
+        if (other.CompareTag("IcePlatform") && HasStarted)
         {
             int randomDirection = Random.Range(0, 1); // 0 або 1
 
