@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
-public class PlayerController : MonoBehaviour
+public class ArcadePlayer : MonoBehaviour
 {
     public AudioSource Music;
     public AudioSource Sounds;
@@ -18,88 +18,61 @@ public class PlayerController : MonoBehaviour
     public AudioClip Danger;
     public AudioClip Open;
     public AudioClip Close;
-    public AudioClip YouClear;
     public AudioClip test;
     private bool isOnRightWave = false;
     private bool isOnLeftWave = false;
-    private bool isPlayingYouClear = false;
+    private bool isLost = false;
     private bool magnetOn = false;
     private float movespeed = 3f; // швидкість руху гравця
     private float step = 0.75f; // відстань між течіями
     private int health = 3;
-    private int max_health = 3;
-    private int progress = 0;
-    public GameObject ballA;
-    public GameObject ballB;
-    public GameObject ExtraShow;
+    private int magnet_coins;
+    private int coins_grabbed;
+    private int total_coins;
     public GameObject boundary;
     public GameObject Shield;
     public GameObject Magnet;
-    public GameObject ClearPanel;
-    public GameObject Star1;
-    public GameObject Star2;
-    public GameObject Star3;
-    public GameObject LevelCheck;
-    public GameObject HealthCheck;
-    public GameObject BallsCheck;
     public GameObject PausePanel;
     public GameObject HomePanel;
     public GameObject GameOver;
     public GameObject Interface;
     public GameObject Starter;
+    public GameObject Coin;
+    public GameObject Heart;
     public Slider ticker;
     public Slider Volume;
     public Slider SFX;
     private bool isOnBrokenPlatform = false;
-    private bool FullHealth;
-    private bool NoExtras;
     private bool HasStarted = false;
     private float breakTimer = 3f;
-    public int ballsA_needed = 10;
-    public int ballsB_needed = 0;
-    private int A_Collected;
-    private int B_Collected;
-    private int ExtraBalls = 0;
-    private int Stars = 0;
-    public int Shield_Count;
+    private int Shield_Count;
     private float line_speed = 4f;
     private float distance = 0.7f;
     private float start_delay = 3f;
-    private string Rank;
-    public string LevelTag;
-    public string Progress_Tag;
     public string RetryTag;
-    public Text ballsA;
-    public Text ballsB;
     public Text health_bar;
-    public Text Extra;
-    public Text Result;
     public Text Shields_Left;
+    public Text coin_counter;
 
     void Start()
     {
-        FullHealth = true;
-        NoExtras = true;
         ticker.gameObject.SetActive(false);
         Shield.SetActive(false);
-        ClearPanel.SetActive(false);
         GameOver.SetActive(false);
         PausePanel.SetActive(false);
         HomePanel.SetActive(false);
-        Star1.SetActive(false);
-        Star2.SetActive(false);
-        Star3.SetActive(false);
-        LevelCheck.SetActive(false);
-        HealthCheck.SetActive(true);
-        BallsCheck.SetActive(true);
         Starter.SetActive(true);
         Time.timeScale = 1f;
         Interface.SetActive(false);
         StartCoroutine(GetReady());
+        coins_grabbed = 0;
+        total_coins = PlayerPrefs.GetInt("Earnings", total_coins);
+        Shield_Count = PlayerPrefs.GetInt("Total Shields", Shield_Count);
     }
     // Update is called once per frame
     void Update()
     {
+        coin_counter.text = coins_grabbed.ToString();
         Shields_Left.text = Shield_Count.ToString();
         // Рух гравця по течіям
         if (isOnRightWave)
@@ -110,9 +83,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.Translate(Vector3.left * movespeed * Time.deltaTime);
         }
-        ballsA.text = ballsA_needed.ToString();
-        ballsB.text = ballsB_needed.ToString();
-        Extra.text = ExtraBalls.ToString();
         health_bar.text = health.ToString();
         PlayerPrefs.SetFloat("Line Speed", line_speed);
         PlayerPrefs.SetFloat("Line Distance", distance);
@@ -123,28 +93,15 @@ public class PlayerController : MonoBehaviour
 
             if (breakTimer <= 0f)
             {
+                boundary.SetActive(false);
                 GameOver.SetActive(true);
                 Interface.SetActive(false);
                 Time.timeScale = 0f;
             }
         }
-        if(ballsA_needed == 0 && ballsB_needed == 0)
-        {
-            Interface.SetActive(false);
-            LevelCheck.SetActive(true);
-            ClearPanel.SetActive(true);
-            LevelClear(Stars, Rank);
-            progress = 1;
-            PlayerPrefs.SetInt(Progress_Tag, progress);
-            Time.timeScale = 0f;
-        }
-        if(health < max_health)
-        {
-            FullHealth = false;
-            HealthCheck.SetActive(false);
-        }
         if(health == 0)
         {
+            boundary.SetActive(false);
             Interface.SetActive(false);
             GameOver.SetActive(true);
             Time.timeScale = 0f;
@@ -155,30 +112,19 @@ public class PlayerController : MonoBehaviour
         }
         else if(!Magnet.activeSelf && magnetOn)
         {
-            A_Collected = PlayerPrefs.GetInt("A balls collected", A_Collected);
-            B_Collected = PlayerPrefs.GetInt("B balls collected", B_Collected);
-            ballsA_needed = ballsA_needed - A_Collected;
-            ballsB_needed = ballsB_needed - B_Collected;
+            magnet_coins = PlayerPrefs.GetInt("A balls collected", magnet_coins);
+            coins_grabbed += magnet_coins;
             magnetOn = false;
         }
-        if(ballsA_needed < 0)
+    }
+    void LoseGame()
+    {
+        if(isLost)
         {
-            ballsA_needed = -ballsA_needed + ballsA_needed;
+            total_coins = total_coins + coins_grabbed;
+            PlayerPrefs.SetInt("Earnings", total_coins);
         }
-        if(ballsB_needed < 0)
-        {
-            ballsB_needed = -ballsB_needed + ballsB_needed;
-        }
-        if(ExtraBalls == 0)
-        {
-            ExtraShow.SetActive(false);
-        }
-        else
-        {
-            BallsCheck.SetActive(false);
-            NoExtras = false;
-            ExtraShow.SetActive(true);
-        }
+        isLost = false;
     }
     IEnumerator GetReady()
     {
@@ -268,43 +214,6 @@ public class PlayerController : MonoBehaviour
             platform.SetMoveSpeed(speed, 8f); // Ваші значення для vanishX та speed
         }
     }
-    void LevelClear(int starship, string Ranking)
-    {
-        if(!NoExtras && !FullHealth)
-        {
-            Star1.SetActive(true);
-            starship = 1;
-            Ranking = "Level Clear";
-            Result.text = Ranking;
-        }
-        else if(!NoExtras || !FullHealth)
-        {
-            Star1.SetActive(true);
-            Star2.SetActive(true);
-            starship = 2;
-            Ranking = "Great Job!";
-            Result.text = Ranking;
-        }
-        else
-        {
-            Star1.SetActive(true);
-            Star2.SetActive(true);   
-            Star3.SetActive(true);
-            starship = 3;
-            Ranking = "PERFECT!";
-            Result.text = Ranking;
-        }
-        Stars = starship;
-        PlayerPrefs.SetInt(LevelTag, Stars);
-if (!isPlayingYouClear)
-    {
-        if (YouClear != null)
-        {
-            isPlayingYouClear = true;
-            Sounds.PlayOneShot(YouClear);
-        }
-    }
-    }
     public void SoundTest()
     {
         Sounds.PlayOneShot(test);
@@ -322,23 +231,17 @@ if (!isPlayingYouClear)
             isOnLeftWave = true;
             isOnRightWave = false;
         }
-        if (other.CompareTag("MustGrab") && ballsA_needed > 0 && HasStarted)
+        if (other.CompareTag("MustGrab") && HasStarted)
         {
             Sounds.PlayOneShot(PickUp);
+            coins_grabbed++;
             other.gameObject.SetActive(false);
-            ballsA_needed--;
         }
-        if (other.CompareTag("MustGrab2") && ballsB_needed > 0 && HasStarted)
+        if (other.CompareTag("MustGrab2") && HasStarted)
         {
             Sounds.PlayOneShot(PickUp);
+            health++;
             other.gameObject.SetActive(false);
-            ballsB_needed--;
-        }
-        if (other.CompareTag("Extra") && HasStarted)
-        {
-            Sounds.PlayOneShot(PickUp);
-            other.gameObject.SetActive(false);
-            ExtraBalls++;
         }
 if (!Shield.activeSelf) // Перевірка, чи щит неактивний
     {
@@ -390,6 +293,8 @@ if (!Shield.activeSelf) // Перевірка, чи щит неактивний
         }
         if (other.gameObject == boundary)
         {
+            total_coins = total_coins + coins_grabbed;
+            PlayerPrefs.SetInt("Earnings", total_coins);
             Interface.SetActive(false);
             GameOver.SetActive(true);
             Time.timeScale = 0f;

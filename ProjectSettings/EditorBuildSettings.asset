@@ -38,4 +38,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 10.unity
     guid: a20098c2ef5d33a408f230cf9cc189cc
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/Infinite.unity
+    guid: 0c95d3527bbf7974fbb0d278340a2642
+  m_configObjects:
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: b06c8317fa2fbf348a13e6c976e67a6a, type: 2}
