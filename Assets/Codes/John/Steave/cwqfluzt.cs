@@ -1,65 +1,65 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using AppsFlyerSDK;
-using rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi;
-using rIAEugth.vseioAW.Game;
+using Codes.John.Game;
+using Codes.John.uiPoor;
 using Unity.Advertisement.IosSupport;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
 
-namespace rIAEugth.vseioAW.segAIWUt
+namespace Codes.John.Steave
 {
-    public class ResourceManager : MonoBehaviour
+    public class cwqfluzt : MonoBehaviour
     {
-        [SerializeField] private NonDisclosure _nonDisclosure;
-        [SerializeField] private IDFAController _idfaCheck;
+        [SerializeField] private egxaacqd cdaoglxi;
 
-        [SerializeField] private StringConcatenator stringConcatenator;
+        [SerializeField] private IDFAController qhmiosfm;
 
-        private bool isFirstInstance = true;
-        private NetworkReachability networkReachability = NetworkReachability.NotReachable;
+        [SerializeField] private Zcwiwxpj zcwiwxpj;
+
+        private bool yzjcrhoq = true;
+        private NetworkReachability nosqfrea = NetworkReachability.NotReachable;
 
         private string globalLocator1 { get; set; }
-        private string globalLocator2;
-        private int globalLocator3;
+        private string wpzowtot;
+        private int hvfhrhgt;
 
-        private string traceCode;
+        private string fblqbslp;
 
         [SerializeField] private List<string> tokenList;
         [SerializeField] private List<string> detailsList;
 
-        private string labeling;
+        private string depfbipm;
 
         private void Awake()
         {
-            HandleMultipleInstances();
+            hkxnnnyy();
         }
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            _idfaCheck.ScrutinizeIDFA();
-            StartCoroutine(FetchAdvertisingID());
+            qhmiosfm.ScrutinizeIDFA();
+            StartCoroutine(rhbhpkfi());
 
             switch (Application.internetReachability)
             {
                 case NetworkReachability.NotReachable:
-                    HandleNoInternetConnection();
+                    vbfdtygx();
                     break;
                 default:
-                    CheckStoredData();
+                    xrlitjpu();
                     break;
             }
         }
 
-        private void HandleMultipleInstances()
+        private void hkxnnnyy()
         {
-            switch (isFirstInstance)
+            switch (yzjcrhoq)
             {
                 case true:
-                    isFirstInstance = false;
+                    yzjcrhoq = false;
                     break;
                 default:
                     gameObject.SetActive(false);
@@ -67,7 +67,7 @@ namespace rIAEugth.vseioAW.segAIWUt
             }
         }
 
-        private IEnumerator FetchAdvertisingID()
+        private IEnumerator rhbhpkfi()
         {
 #if UNITY_IOS
             var authorizationStatus = ATTrackingStatusBinding.GetAuthorizationTrackingStatus();
@@ -78,67 +78,67 @@ namespace rIAEugth.vseioAW.segAIWUt
             }
 #endif
 
-            traceCode = _idfaCheck.RetrieveAdvertisingID();
+            fblqbslp = qhmiosfm.RetrieveAdvertisingID();
             yield return null;
         }
 
-        private void CheckStoredData()
+        private void xrlitjpu()
         {
             if (PlayerPrefs.GetString("top", string.Empty) != string.Empty)
             {
-                LoadStoredData();
+                ehaynzsx();
             }
             else
             {
-                FetchDataFromServerWithDelay();
+                phkoalwf();
             }
         }
 
-        private void LoadStoredData()
+        private void ehaynzsx()
         {
             globalLocator1 = PlayerPrefs.GetString("top", string.Empty);
-            globalLocator2 = PlayerPrefs.GetString("top2", string.Empty);
-            globalLocator3 = PlayerPrefs.GetInt("top3", 0);
-            ImportData();
+            wpzowtot = PlayerPrefs.GetString("top2", string.Empty);
+            hvfhrhgt = PlayerPrefs.GetInt("top3", 0);
+            dhslqizt();
         }
 
-        private void FetchDataFromServerWithDelay()
+        private void phkoalwf()
         {
-            Invoke(nameof(ReceiveData), 7.4f);
+            Invoke(nameof(jwwapyqk), 5f);
         }
 
-        private void ReceiveData()
+        private void jwwapyqk()
         {
-            if (Application.internetReachability == networkReachability)
+            if (Application.internetReachability == nosqfrea)
             {
-                HandleNoInternetConnection();
+                vbfdtygx();
             }
             else
             {
-                StartCoroutine(FetchDataFromServer());
+                StartCoroutine(mezmrfxi());
             }
         }
 
 
-        private IEnumerator FetchDataFromServer()
+        private IEnumerator mezmrfxi()
         {
-            using UnityWebRequest webRequest = UnityWebRequest.Get(stringConcatenator.ConcatenateStrings(detailsList));
+            using UnityWebRequest webRequest = UnityWebRequest.Get(zcwiwxpj.wldkakd(detailsList));
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
                 webRequest.result == UnityWebRequest.Result.DataProcessingError)
             {
-                HandleNoInternetConnection();
+                vbfdtygx();
             }
             else
             {
-                ProcessServerResponse(webRequest);
+                crxojmoq(webRequest);
             }
         }
 
-        private void ProcessServerResponse(UnityWebRequest webRequest)
+        private void crxojmoq(UnityWebRequest webRequest)
         {
-            string tokenConcatenation = stringConcatenator.ConcatenateStrings(tokenList);
+            string tokenConcatenation = zcwiwxpj.wldkakd(tokenList);
 
             if (webRequest.downloadHandler.text.Contains(tokenConcatenation))
             {
@@ -150,8 +150,8 @@ namespace rIAEugth.vseioAW.segAIWUt
                     PlayerPrefs.SetInt("top3", int.Parse(dataParts[2]));
 
                     globalLocator1 = dataParts[0];
-                    globalLocator2 = dataParts[1];
-                    globalLocator3 = int.Parse(dataParts[2]);
+                    wpzowtot = dataParts[1];
+                    hvfhrhgt = int.Parse(dataParts[2]);
                 }
                 catch
                 {
@@ -159,40 +159,41 @@ namespace rIAEugth.vseioAW.segAIWUt
                     globalLocator1 = webRequest.downloadHandler.text;
                 }
 
-                ImportData();
+                dhslqizt();
             }
             else
             {
-                HandleNoInternetConnection();
+                vbfdtygx();
             }
         }
 
-        private void ImportData()
+        private void dhslqizt()
         {
-            _nonDisclosure.WebPageLink = $"{globalLocator1}?idfa={traceCode}";
-            _nonDisclosure.WebPageLink +=
+            cdaoglxi.Qlkfjzsd = $"{globalLocator1}?idfa={fblqbslp}";
+            cdaoglxi.Qlkfjzsd +=
                 $"&gaid={AppsFlyer.getAppsFlyerId()}{PlayerPrefs.GetString("Result", string.Empty)}";
-            _nonDisclosure.GlobalLocator1 = globalLocator2;
+            cdaoglxi.ucwuqprp = wpzowtot;
 
 
-            Kom();
+            alzvdknt();
         }
 
-        public void Kom()
+        public void alzvdknt()
         {
-            _nonDisclosure.ToolbarHeight = globalLocator3;
-            _nonDisclosure.gameObject.SetActive(true);
+            cdaoglxi.efoewbvs = hvfhrhgt;
+            cdaoglxi.gameObject.SetActive(true);
         }
 
-        private void HandleNoInternetConnection()
+        private void vbfdtygx()
         {
-            DisableCanvas();
+            hpllaloe();
         }
 
-        private void DisableCanvas()
+        private void hpllaloe()
         {
             CanvasHelper.FadeCanvasGroup(gameObject, false);
         }
+
 
         // Add the rest of your methods as needed...
     }

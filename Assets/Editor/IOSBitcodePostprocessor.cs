@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 
-namespace Editor
+namespace EditorIOS
 {
     public sealed class IOSBitcodePostprocessor
     {

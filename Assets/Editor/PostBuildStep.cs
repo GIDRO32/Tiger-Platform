@@ -5,7 +5,7 @@ using UnityEditor.iOS.Xcode;
 #if UNITY_IOS
 #endif
 
-namespace Editor
+namespace EditorIOS
 {
     public class PostBuildStep {
         // Set the IDFA request description:

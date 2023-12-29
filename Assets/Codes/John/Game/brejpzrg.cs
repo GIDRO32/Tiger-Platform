@@ -1,13 +1,18 @@
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.Game
+namespace Codes.John.Game
 {
-    public class Auer:Appps
+    public class brejpzrg : asdafpppf
     {
-        public void Initialize()
+        public void Awake()
+        {
+            base.Awake();
+        }
+
+        public void mjxjuigq()
         {
             UniWebView.SetAllowInlinePlay(true);
-            
+
             var ewgseg = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
             foreach (var dohse in ewgseg)
             {

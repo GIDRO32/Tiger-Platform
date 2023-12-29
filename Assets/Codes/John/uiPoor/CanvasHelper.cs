@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using rIAEugth.vseioAW.eoitiJAIEg;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
+namespace Codes.John.uiPoor
 {
     public class CanvasHelper : MonoBehaviour
     {

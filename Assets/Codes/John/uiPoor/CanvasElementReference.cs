@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
+namespace Codes.John.uiPoor
 {
     public class CanvasElementReference : MonoBehaviour
     {

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.Game
+namespace Codes.John.Game
 {
-    public class Appps:MonoBehaviour
+    public class asdafpppf : MonoBehaviour
     {
         public void Awake()
         {

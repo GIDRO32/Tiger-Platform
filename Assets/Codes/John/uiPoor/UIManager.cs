@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace rIAEugth.vseioAW.cbxOIAEgt.oiawtH_Wi
+namespace Codes.John.uiPoor
 {
     public class UIManager : MonoBehaviour
     {
