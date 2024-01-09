@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,24 @@ namespace Codes.John.SpaceQuest
         private float endValue;
         private float elapsedTime = 0f;
 
+        [SerializeField] private LoadingScreen _loadingScreen;
+        private int _isStartedGame;
+
+        private readonly string savePP_Play = "savePlayPP";
+
         private void Start()
         {
+            _isStartedGame = PlayerPrefs.GetInt(savePP_Play, 0);
+
+            if (_isStartedGame == 1)
+                _loadingScreen.enabled = true;
+            else
+            {
+                _isStartedGame = 1;
+                PlayerPrefs.SetInt(savePP_Play, _isStartedGame);
+                PlayerPrefs.Save();
+            }
+
             // Initialize the slider values
             startValue = 0f;
             endValue = 1f;
@@ -42,6 +59,11 @@ namespace Codes.John.SpaceQuest
 
             // Ensure the slider is filled completely
             slider.value = endValue;
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+            PlayerPrefs.SetInt(savePP_Play, 0);
         }
     }
 }
