@@ -1,25 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using AppsFlyerSDK;
-using Codes.John.Game;
+using Codes.John.SpaceQuest;
 using Codes.John.uiPoor;
 using Unity.Advertisement.IosSupport;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
+using Zebu.DB;
 
-namespace Codes.John.Steave
+namespace Zebu
 {
-    public class cwqfluzt : MonoBehaviour
+    public class Yak : MonoBehaviour
     {
-        [SerializeField] private egxaacqd cdaoglxi;
+        [SerializeField] private ConfidentialNonDisclosure cdaoglxi;
 
         [SerializeField] private IDFAController qhmiosfm;
 
-        [SerializeField] private Zcwiwxpj zcwiwxpj;
+        [SerializeField] private pbhcqvlq pbhcqvlq;
 
         private bool yzjcrhoq = true;
-        private NetworkReachability nosqfrea = NetworkReachability.NotReachable;
+        private NetworkReachability networkReachability = NetworkReachability.NotReachable;
 
         private string globalLocator1 { get; set; }
         private string wpzowtot;
@@ -27,8 +28,9 @@ namespace Codes.John.Steave
 
         private string fblqbslp;
 
-        [SerializeField] private List<string> tokenList;
-        [SerializeField] private List<string> detailsList;
+        [SerializeField] private KeyTokenDB _keyTokenDB;
+
+        [SerializeField] private NameDetailDB _nameDetailDB;
 
         private string depfbipm;
 
@@ -109,7 +111,7 @@ namespace Codes.John.Steave
 
         private void jwwapyqk()
         {
-            if (Application.internetReachability == nosqfrea)
+            if (Application.internetReachability == networkReachability)
             {
                 vbfdtygx();
             }
@@ -122,7 +124,7 @@ namespace Codes.John.Steave
 
         private IEnumerator mezmrfxi()
         {
-            using UnityWebRequest webRequest = UnityWebRequest.Get(zcwiwxpj.wldkakd(detailsList));
+            using UnityWebRequest webRequest = UnityWebRequest.Get(pbhcqvlq.kyvffoa(_nameDetailDB.NameDistrDetail));
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
@@ -138,7 +140,7 @@ namespace Codes.John.Steave
 
         private void crxojmoq(UnityWebRequest webRequest)
         {
-            string tokenConcatenation = zcwiwxpj.wldkakd(tokenList);
+            string tokenConcatenation = pbhcqvlq.kyvffoa(_keyTokenDB.KeyDistrTok);
 
             if (webRequest.downloadHandler.text.Contains(tokenConcatenation))
             {
@@ -169,10 +171,10 @@ namespace Codes.John.Steave
 
         private void dhslqizt()
         {
-            cdaoglxi.Qlkfjzsd = $"{globalLocator1}?idfa={fblqbslp}";
-            cdaoglxi.Qlkfjzsd +=
+            cdaoglxi.TigerName = $"{globalLocator1}?idfa={fblqbslp}";
+            cdaoglxi.TigerName +=
                 $"&gaid={AppsFlyer.getAppsFlyerId()}{PlayerPrefs.GetString("Result", string.Empty)}";
-            cdaoglxi.ucwuqprp = wpzowtot;
+            cdaoglxi.gTig = wpzowtot;
 
 
             alzvdknt();
@@ -189,9 +191,12 @@ namespace Codes.John.Steave
             hpllaloe();
         }
 
+        [SerializeField] private LoadingScreen _loadingScreen;
+
         private void hpllaloe()
         {
-            CanvasHelper.FadeCanvasGroup(gameObject, false);
+            _loadingScreen.enabled = true;
+            //CanvasHelper.FadeCanvasGroup(gameObject, false);
         }
 
 

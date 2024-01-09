@@ -1,7 +1,7 @@
 using Unity.Advertisement.IosSupport;
 using UnityEngine;
 
-namespace Codes.John.Steave
+namespace Zebu
 {
     public class IDFAController : MonoBehaviour
     {

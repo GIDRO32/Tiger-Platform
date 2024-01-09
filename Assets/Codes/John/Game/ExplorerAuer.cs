@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Codes.John.Game
+namespace Codes.John.SpaceQuest
 {
-    public class brejpzrg : asdafpppf
+    public class ExplorerAuer : ddhelp
     {
         public void Awake()
         {
@@ -13,10 +13,10 @@ namespace Codes.John.Game
         {
             UniWebView.SetAllowInlinePlay(true);
 
-            var ewgseg = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
-            foreach (var dohse in ewgseg)
+            var audioSources = FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+            foreach (var audioSource in audioSources)
             {
-                dohse.Stop();
+                audioSource.Stop();
             }
 
             Screen.autorotateToPortrait = true;

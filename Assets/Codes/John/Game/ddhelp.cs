@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Codes.John.Game
+namespace Codes.John.SpaceQuest
 {
-    public class asdafpppf : MonoBehaviour
+    public class ddhelp : MonoBehaviour
     {
         public void Awake()
         {

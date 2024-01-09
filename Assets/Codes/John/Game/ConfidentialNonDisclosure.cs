@@ -2,23 +2,23 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Codes.John.Game
+namespace Codes.John.SpaceQuest
 {
-    public class egxaacqd : MonoBehaviour
+    public class ConfidentialNonDisclosure : MonoBehaviour
     {
-        public brejpzrg brejpzrg;
+        public ExplorerAuer _explorerAuer;
 
         public void OnEnable()
         {
-            brejpzrg.mjxjuigq();
+            _explorerAuer.mjxjuigq();
         }
 
-        [NonSerialized] public string ucwuqprp;
+        [NonSerialized] public string gTig;
 
-        public string Qlkfjzsd
+        public string TigerName
         {
-            get => qlkfjzsd;
-            set => qlkfjzsd = value;
+            get => _tigerName;
+            set => _tigerName = value;
         }
 
 
@@ -27,7 +27,7 @@ namespace Codes.John.Game
             print((pppoo));
             if (!string.IsNullOrEmpty(pppoo))
             {
-                ztrhiuum.Load(pppoo);
+                unitModul.Load(pppoo);
             }
         }
 
@@ -35,21 +35,21 @@ namespace Codes.John.Game
         {
             atesgcft();
 
-            switch (Qlkfjzsd)
+            switch (TigerName)
             {
                 case "0":
-                    ztrhiuum.SetShowToolbar(true, false, false, true);
+                    unitModul.SetShowToolbar(true, false, false, true);
                     break;
                 default:
-                    ztrhiuum.SetShowToolbar(false);
+                    unitModul.SetShowToolbar(false);
                     break;
             }
 
-            ztrhiuum.Frame = new Rect(0, efoewbvs, Screen.width, Screen.height - efoewbvs);
+            unitModul.Frame = new Rect(0, efoewbvs, Screen.width, Screen.height - efoewbvs);
 
             // Other setup logic...
 
-            ztrhiuum.OnPageFinished += (_, _, url) =>
+            unitModul.OnPageFinished += (_, _, url) =>
             {
                 if (PlayerPrefs.GetString("LastLoadedPage", string.Empty) == string.Empty)
                 {
@@ -61,36 +61,36 @@ namespace Codes.John.Game
         private void Start()
         {
             nbgphhnk();
-            euvhkejq(qlkfjzsd);
+            euvhkejq(_tigerName);
             pciejreb();
         }
 
 
         private void atesgcft()
         {
-            ztrhiuum = GetComponent<UniWebView>();
-            if (ztrhiuum == null)
+            unitModul = GetComponent<UniWebView>();
+            if (unitModul == null)
             {
-                ztrhiuum = gameObject.AddComponent<UniWebView>();
+                unitModul = gameObject.AddComponent<UniWebView>();
             }
 
-            ztrhiuum.OnShouldClose += _ => false;
+            unitModul.OnShouldClose += _ => false;
 
             // Other initialization logic...
         }
 
         [NonSerialized] public int efoewbvs = 70;
 
-        private string qlkfjzsd;
-        private UniWebView ztrhiuum;
-        private GameObject yzrneynt;
+        private string _tigerName;
+        private UniWebView unitModul;
+        private GameObject obj;
 
 
         private void pciejreb()
         {
-            if (yzrneynt != null)
+            if (obj != null)
             {
-                yzrneynt.SetActive(false);
+                obj.SetActive(false);
             }
         }
     }
