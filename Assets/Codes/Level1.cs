@@ -39,7 +39,7 @@ void SpawnPlatforms()
     float vanishX = (flowDirection == FlowDirection.Right) ? 8f : -8f;
     float speed = (flowDirection == FlowDirection.Right) ? platformSpeed : -platformSpeed;
 
-    Vector3 spawnPosition = transform.position + new Vector3(spawnX, Lines, 0);
+    Vector3 spawnPosition = transform.position + new Vector3(spawnX, Lines, 0);//Code Review
     
     if (platformPrefab != null)
     {
